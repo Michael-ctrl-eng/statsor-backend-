@@ -1,0 +1,23 @@
+{
+  "name": "groq-chatbot-integration",
+  "version": "1.0.0",
+  "description": "Groq API integration for the AI Football Assistant",
+  "main": "groq_node_test.js",
+  "type": "module",
+  "scripts": {
+    "test": "node groq_node_test.js"
+  },
+  "keywords": [
+    "groq",
+    "openai",
+    "chatbot",
+    "football",
+    "ai"
+  ],
+  "author": "TeamPlayMate",
+  "license": "MIT",
+  "dependencies": {
+    "openai": "^4.52.0",
+    "dotenv": "^16.4.5"
+  }
+}
