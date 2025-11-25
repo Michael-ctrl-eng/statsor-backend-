@@ -1,0 +1,12 @@
+[phases.setup]
+nixPkgs = ["nodejs-18_x"]
+
+[phases.build]
+cmds = ["cd backend && npm install"]
+
+[start]
+cmd = "node server.js"
+
+[healthcheck]
+path = "/health"
+port = 3001
