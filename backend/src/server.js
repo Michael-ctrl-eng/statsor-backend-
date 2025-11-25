@@ -181,7 +181,8 @@ class Server {
         'http://127.0.0.1:3008',
         'http://127.0.0.1:5173',
         'https://statsor.com',
-        'https://www.statsor.com'
+        'https://www.statsor.com',
+        'https://healthcheck.railway.app'
       ];
 
       const corsOptions = {
