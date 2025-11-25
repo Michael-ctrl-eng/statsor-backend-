@@ -10,7 +10,9 @@ services:
     depends_on:
       - backend
     environment:
-      - VITE_BACKEND_URL=http://backend:5000
+      - VITE_API_URL=https://web-production-22b3d.up.railway.app
+      - VITE_APP_URL=https://web-production-22b3d.up.railway.app
+      - VITE_WS_URL=wss://web-production-22b3d.up.railway.app
 
   backend:
     build:

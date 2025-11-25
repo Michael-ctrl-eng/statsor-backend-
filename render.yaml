@@ -8,15 +8,15 @@ services:
     routes:
       - type: rewrite
         source: /api/*
-        destination: https://api.statsor.com/api/*
+        destination: https://web-production-22b3d.up.railway.app/api/*
       - type: rewrite
         source: /*
         destination: /index.html
     envVars:
       - key: VITE_API_URL
-        value: https://api.statsor.com
+        value: https://web-production-22b3d.up.railway.app
       - key: VITE_APP_URL
-        value: https://statsor.com
+        value: https://web-production-22b3d.up.railway.app
 
   # Backend API Service
   - type: web

@@ -805,12 +805,12 @@ export class RealTimeDataSync {
 
 // Export service instances
 export const webSocketManager = new WebSocketManager(
-  process.env.REACT_APP_WS_URL || 'ws://localhost:3001'
+  import.meta.env['VITE_WS_URL'] || 'wss://web-production-22b3d.up.railway.app'
 );
 export const serviceWorkerManager = new ServiceWorkerManager();
 export const progressiveLoadingManager = new ProgressiveLoadingManager();
 export const realTimeDataSync = new RealTimeDataSync(
-  process.env.REACT_APP_WS_URL || 'ws://localhost:3001'
+  import.meta.env['VITE_WS_URL'] || 'wss://web-production-22b3d.up.railway.app'
 );
 
 // Real-time service orchestrator

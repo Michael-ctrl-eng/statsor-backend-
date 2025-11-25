@@ -3,10 +3,19 @@
   "name": "statsor-frontend",
   "rewrites": [
     {
+      "source": "/api/(.*)",
+      "destination": "https://web-production-22b3d.up.railway.app/api/$1"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
   ],
+  "env": {
+    "VITE_API_URL": "https://web-production-22b3d.up.railway.app",
+    "VITE_APP_URL": "https://statsor-frontend.vercel.app",
+    "VITE_WS_URL": "wss://web-production-22b3d.up.railway.app"
+  },
   "headers": [
     {
       "source": "/(.*)",

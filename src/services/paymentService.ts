@@ -61,7 +61,7 @@ class ProductionPaymentService {
   constructor() {
     this.stripePublicKey = import.meta.env?.['VITE_STRIPE_PUBLISHABLE_KEY'] || '';
     this.paypalClientId = import.meta.env?.['VITE_PAYPAL_CLIENT_ID'] || '';
-    this.baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+    this.baseUrl = import.meta.env.VITE_API_URL || 'https://web-production-22b3d.up.railway.app';
     
     if (!this.stripePublicKey || !this.paypalClientId) {
       console.warn('Payment configuration incomplete. Some features may not work.');
@@ -177,7 +177,7 @@ class ProductionPaymentService {
       
       return new Promise((resolve, reject) => {
         paypal.Buttons({
-          createSubscription: async (data: any, actions: any) => {
+          createSubscription: async (_data: any, _actions: any) => {
             try {
               const response = await fetch(`${this.baseUrl}/api/v1/payments/paypal/create-subscription`, {
                 method: 'POST',
@@ -194,7 +194,7 @@ class ProductionPaymentService {
               reject(error);
             }
           },
-          onApprove: async (data: any, actions: any) => {
+          onApprove: async (data: any, _actions: any) => {
             try {
               // Capture the subscription
               const response = await fetch(`${this.baseUrl}/api/v1/payments/paypal/capture-subscription`, {

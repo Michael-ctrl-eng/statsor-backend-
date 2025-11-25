@@ -1,9 +1,8 @@
 import { footballAnalysisService } from './footballAnalysisService';
-import { userDataAnalysisService } from './userDataAnalysisService';
-import { injuryAssessmentService, PlayerHealthData } from './injuryAssessmentService';
-import { accountManagementService } from './accountManagementService';
+// import { userDataAnalysisService } from './userDataAnalysisService';
+// import { injuryAssessmentService, PlayerHealthData } from './injuryAssessmentService';
+// import { accountManagementService } from './accountManagementService';
 import axios from 'axios';
-import { api } from '../lib/api';
 
 // Types
 export interface ChatMessage {
@@ -32,13 +31,13 @@ export interface AIResponse {
 
 // AI Chat Service that connects to the backend proxy
 class AIChatService {
-  private userContextCache: Map<string, UserContext> = new Map();
+  // private userContextCache: Map<string, UserContext> = new Map();
   private conversationMemory: Map<string, ChatMessage[]> = new Map();
   private apiBaseUrl: string;
 
   constructor() {
-    // Use the backend API URL - defaulting to localhost:3001
-    this.apiBaseUrl = import.meta.env['VITE_API_URL'] || 'http://localhost:3001';
+    // Use the backend API URL - defaulting to Railway backend
+    this.apiBaseUrl = import.meta.env['VITE_API_URL'] || 'https://web-production-22b3d.up.railway.app';
   }
 
   async processMessage(message: string, userContext: UserContext): Promise<AIResponse> {
@@ -144,7 +143,7 @@ class AIChatService {
     }
   }
 
-  private generateSuggestions(message: string, intent?: string): string[] {
+  private generateSuggestions(_message: string, intent?: string): string[] {
     const suggestions: Record<string, string[]> = {
       "player_info": [
         "Tell me about our top scorer",
@@ -193,10 +192,10 @@ class AIChatService {
       ]
     };
 
-    return suggestions[intent || "default"] || suggestions["default"];
+    return (suggestions[intent || "default"] as string[]) || (suggestions["default"] as string[]);
   }
 
-  private generateFollowUpQuestions(message: string, intent?: string): string[] {
+  private generateFollowUpQuestions(_message: string, intent?: string): string[] {
     const questions: Record<string, string[]> = {
       "player_info": [
         "What are their strengths?",
@@ -245,20 +244,21 @@ class AIChatService {
       ]
     };
 
-    return questions[intent || "default"] || questions["default"];
+    return (questions[intent || "default"] as string[]) || (questions["default"] as string[]);
   }
 
   private isValidResponse(response: AIResponse): boolean {
-    return response && 
+    return !!(response && 
            response.content && 
            response.content.trim().length > 0 && 
-           response.confidence > 0 &&
+           typeof response.confidence === 'number' &&
            !response.content.includes('Sorry, I encountered an error') &&
-           !response.content.includes('technical difficulties');
+           !response.content.includes('technical difficulties'));
   }
 
   private enhanceResponse(response: AIResponse, originalMessage: string, userContext: UserContext): AIResponse {
     // Add conversational elements to make responses more human-like
+    // ... (rest of the code remains the same)
     const conversationHistory = this.conversationMemory.get(userContext.userId) || [];
     const isFirstMessage = conversationHistory.length <= 1;
     
@@ -286,8 +286,8 @@ class AIChatService {
     };
   }
 
-  private generateHelpfulResponse(type: string, userContext: UserContext): AIResponse {
-    const responses = {
+  private generateHelpfulResponse(type: string, _userContext: UserContext): AIResponse {
+    const responses: Record<string, AIResponse> = {
       empty_message: {
         content: "I'm here to help with your tactical questions! You can ask me about formations, player analysis, training strategies, or match preparation. What would you like to discuss?",
         confidence: 85,
@@ -296,10 +296,10 @@ class AIChatService {
       }
     };
     
-    return responses[type] || this.generateIntelligentResponse('help', userContext);
+    return responses[type] || this.generateIntelligentResponse('help', _userContext);
   }
 
-  private generateErrorRecoveryResponse(originalMessage: string, userContext: UserContext): AIResponse {
+  private generateErrorRecoveryResponse(originalMessage: string, _userContext: UserContext): AIResponse {
     const errorResponses = [
       "I apologize for the technical difficulty. Let me try to help you with that question in a different way.",
       "I'm experiencing some connectivity issues, but I can still provide tactical advice based on my knowledge.",
@@ -504,8 +504,8 @@ This analysis is based on current football tactics and your query: "${originalMe
         throw new Error('Authentication required. Please log in.');
       }
       
-      // Try to make the API call
-      const response = await api.post('/ai-proxy/chat', {
+      // Try to make the API call using axios directly
+      const response = await axios.post(`${this.apiBaseUrl}/api/v1/ai-proxy/chat`, {
         message,
         context
       }, {
@@ -546,7 +546,7 @@ This analysis is based on current football tactics and your query: "${originalMe
   async getTeamData(): Promise<any> {
     try {
       const token = localStorage.getItem('auth_token');
-      const response = await api.get('/ai-proxy/team-data', {
+      const response = await axios.get(`${this.apiBaseUrl}/api/v1/ai-proxy/team-data`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -562,7 +562,7 @@ This analysis is based on current football tactics and your query: "${originalMe
   async updateTeamData(teamData: any): Promise<any> {
     try {
       const token = localStorage.getItem('auth_token');
-      const response = await api.post('/ai-proxy/team-data', teamData, {
+      const response = await axios.post(`${this.apiBaseUrl}/api/v1/ai-proxy/team-data`, teamData, {
         headers: {
           Authorization: `Bearer ${token}`
         }

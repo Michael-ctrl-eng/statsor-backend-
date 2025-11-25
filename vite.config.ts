@@ -92,8 +92,8 @@ export default defineConfig({
     }
   },
   define: {
-    'process.env.VITE_API_URL': JSON.stringify('http://localhost:3001'),
-    'process.env.VITE_APP_URL': JSON.stringify('http://localhost:3006')
+    'process.env.VITE_API_URL': JSON.stringify(process.env.VITE_API_URL || 'https://web-production-22b3d.up.railway.app'),
+    'process.env.VITE_APP_URL': JSON.stringify(process.env.VITE_APP_URL || 'http://localhost:3008')
   },
   test: {
     globals: true,

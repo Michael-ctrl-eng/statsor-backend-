@@ -9,7 +9,7 @@
 # Redirect API calls to Railway backend
 [[redirects]]
   from = "/api/*"
-  to = "https://statsor-backend.railway.app/api/:splat"
+  to = "https://web-production-22b3d.up.railway.app/api/:splat"
   status = 200
   force = true
 
