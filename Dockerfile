@@ -1,9 +1,8 @@
-# Use Node.js 18 LTS for Koyeb compatibility
+# Use Node.js 18 LTS for Koyeb/Railway compatibility
 FROM node:18-alpine
 
-# Set environment variables
+# Set environment variables (PORT will be provided by the platform)
 ENV NODE_ENV=production
-ENV PORT=3001
 
 # Create app directory
 WORKDIR /app
@@ -25,7 +24,7 @@ WORKDIR /app/backend
 # Create uploads directory if needed
 RUN mkdir -p uploads
 
-# Expose the port
+# Expose the application port (platform will map its own PORT env)
 EXPOSE 3001
 
 # Start the application
