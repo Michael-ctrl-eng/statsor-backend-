@@ -1,6 +1,6 @@
 # StatSor - Football Management Platform
 
-StatSor is a comprehensive football management platform that helps coaches and managers track player performance, analyze matches, and make data-driven decisions..
+StatSor is a comprehensive football management platform that helps coaches and managers track player performance, analyze matches, and make data-driven decisions.
 
 ## Features
 
