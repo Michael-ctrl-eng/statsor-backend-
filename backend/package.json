@@ -10,9 +10,7 @@
     "build": "echo \"No build step needed for CommonJS\"",
     "test": "jest",
     "lint": "eslint src/**/*.js",
-    "lint:fix": "eslint src/**/*.js --fix",
-    "email:status": "node test-email-service.js status",
-    "email:test": "node test-email-service.js test"
+    "lint:fix": "eslint src/**/*.js --fix"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.857.0",
