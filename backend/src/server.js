@@ -241,16 +241,6 @@ class Server {
 
       // Static files
       this.app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
-
-      // Health check endpoint
-      this.app.get('/health', (req, res) => {
-        res.status(200).json({
-          status: 'OK',
-          timestamp: new Date().toISOString(),
-          uptime: process.uptime(),
-          environment: process.env.NODE_ENV || 'development'
-        });
-      });
     } catch (error) {
       logger.error('Error configuring middleware:', error.message);
       logger.error('Stack trace:', error.stack);
@@ -261,14 +251,13 @@ class Server {
 
   async setupRoutes() {
     try {
-      // Health check endpoint
+      // Simple health check endpoint for Railway/Koyeb
       this.app.get('/health', (req, res) => {
-        res.json({
+        res.status(200).json({
           status: 'OK',
           timestamp: new Date().toISOString(),
           uptime: process.uptime(),
-          environment: this.config.NODE_ENV,
-          version: process.env.npm_package_version || '1.0.0'
+          environment: process.env.NODE_ENV || 'development'
         });
       });
 
@@ -298,17 +287,7 @@ class Server {
       // API routes
       const apiRouter = express.Router();
 
-      // Health check endpoint for Railway
-      apiRouter.get('/health', (req, res) => {
-        res.json({
-          status: 'OK',
-          timestamp: new Date().toISOString(),
-          uptime: process.uptime(),
-          environment: this.config.NODE_ENV,
-          version: process.env.npm_package_version || '1.0.0'
-        });
-      });
-
+      
       // Mount route modules
       apiRouter.use('/auth', this.authRoutes);
       apiRouter.use('/teams', this.teamsRoutes);
