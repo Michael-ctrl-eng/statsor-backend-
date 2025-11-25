@@ -23,7 +23,7 @@ class Server {
   constructor() {
     this.app = express();
     this.server = http.createServer(this.app);
-    this.port = process.env.PORT || 3000;
+    this.port = process.env.PORT || 3001;
     this.socketService = null;
     this.config = null;
 

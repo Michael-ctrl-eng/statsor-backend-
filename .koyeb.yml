@@ -1,0 +1,31 @@
+name: statsor-backend
+services:
+  - name: web
+    source:
+      type: git
+      git:
+        url: https://github.com/Michael-ctrl-eng/statsor-backend-
+        branch: master
+    build:
+      type: dockerfile
+      dockerfile: Dockerfile
+    ports:
+      - port: 3001
+        protocol: http
+        path: /
+    health_check:
+      path: /health
+      port: 3001
+      check_interval: 30s
+      timeout: 10s
+      retries: 3
+    env:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: "3001"
+    instance_type: nano
+    regions:
+      - was
+      - fra
+      - sin
