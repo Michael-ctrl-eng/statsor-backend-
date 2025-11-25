@@ -18,14 +18,5 @@ RUN cd backend && npm install --production
 # Copy application files
 COPY . .
 
-# Change to backend directory
-WORKDIR /app/backend
-
-# Create uploads directory if needed
-RUN mkdir -p uploads
-
-# Expose the application port (platform will map its own PORT env)
-EXPOSE 3001
-
-# Start the application
-CMD ["node", "src/server.js"]
+# Start the application from root directory
+CMD ["node", "server.js"]
