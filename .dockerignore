@@ -4,6 +4,7 @@ node_modules
 README.md
 .env
 .env.*
+*.log
 dist
 build
-*.log
+.DS_Store

@@ -1,12 +1,9 @@
-[phases.setup]
-nixPkgs = ["nodejs-18_x"]
-
 [phases.build]
-cmds = ["cd backend && npm install"]
+cmds = ["cd backend && npm install --production"]
 
 [start]
 cmd = "node server.js"
 
-[healthcheck]
-path = "/health"
-port = 3001
+[variables]
+PHASE_1_CMD = "cd backend && npm install --production"
+START_CMD = "node server.js"
