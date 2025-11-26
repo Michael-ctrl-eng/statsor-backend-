@@ -603,6 +603,13 @@ router.post('/resend-verification',
 
 // Google OAuth routes
 router.get('/google',
+  (req, res, next) => {
+    console.log('=== GOOGLE OAUTH DEBUG ===');
+    console.log('Request host:', req.get('host'));
+    console.log('Request protocol:', req.protocol);
+    console.log('Full URL:', req.protocol + '://' + req.get('host') + req.originalUrl);
+    next();
+  },
   passport.authenticate('google', { 
     scope: ['profile', 'email'],
     callbackURL:"https://api.statsor.com/api/v1/auth/google/callback"
